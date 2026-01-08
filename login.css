@@ -1,0 +1,302 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.login-container {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    height: 100vh;
+}
+
+/* Left Side - Red Section */
+.login-left {
+    background-color: #8C1515;
+    color: #fff;
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.logo-circle {
+    width: 60px;
+    height: 60px;
+}
+
+.logo-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+}
+
+.welcome-text {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.tagline {
+    font-size: 1.3rem;
+    font-weight: 300;
+    opacity: 0.95;
+    line-height: 1.4;
+}
+
+/* Right Side - Form Section */
+.login-right {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    overflow-y: auto;
+}
+
+.form-wrapper {
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.form-subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 3rem;
+}
+
+.login-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.85rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+.form-group input:focus {
+    border-color: #8C1515;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(140, 21, 21, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #8C1515;
+}
+
+.forgot-password {
+    font-size: 0.9rem;
+    color: #8C1515;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: #8C1515;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(140, 21, 21, 0.3);
+    margin-top: 1rem;
+}
+
+.btn-login:hover {
+    background-color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.register-link a {
+    color: #8C1515;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+/* Message Box Styles */
+.message-box {
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message-box.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message-box.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.btn-login:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .login-container {
+        grid-template-columns: 1fr;
+    }
+
+    .login-left {
+        padding: 3rem 2rem;
+        min-height: 40vh;
+    }
+
+    .welcome-text {
+        font-size: 2.5rem;
+    }
+
+    .tagline {
+        font-size: 1.1rem;
+    }
+
+    .login-right {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-left {
+        padding: 2rem 1.5rem;
+    }
+
+    .logo-text {
+        font-size: 2rem;
+    }
+
+    .welcome-text {
+        font-size: 2rem;
+    }
+
+    .form-title {
+        font-size: 2rem;
+    }
+
+    .form-wrapper {
+        max-width: 100%;
+    }
+
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}

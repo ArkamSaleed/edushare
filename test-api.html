@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test - EduShare</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #8C1515;
+            margin-bottom: 1rem;
+        }
+
+        .status {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .test-section h2 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        button {
+            background: #8C1515;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #000;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .result {
+            margin-top: 1rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #8C1515;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-box {
+            background: #fff3cd;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ffeeba;
+        }
+
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checklist li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 EduShare API Test Suite</h1>
+        
+        <div class="info-box">
+            <strong>⚠️ Important:</strong> Make sure the backend server is running on port 3000 before testing!
+            <br>Run: <code>npm run dev</code> in the backend folder
+        </div>
+
+        <div id="serverStatus" class="status info">
+            Checking server status...
+        </div>
+
+        <!-- Health Check -->
+        <div class="test-section">
+            <h2>1. Server Health Check</h2>
+            <button onclick="testHealth()">Test Health Endpoint</button>
+            <div id="healthResult" class="result"></div>
+        </div>
+
+        <!-- Registration Test -->
+        <div class="test-section">
+            <h2>2. User Registration</h2>
+            <div class="grid">
+                <input type="text" id="regFirstName" placeholder="First Name" value="Test">
+                <input type="text" id="regLastName" placeholder="Last Name" value="User">
+            </div>
+            <input type="email" id="regEmail" placeholder="Email" value="test@university.edu">
+            <input type="password" id="regPassword" placeholder="Password" value="test123456">
+            <button onclick="testRegister()">Test Registration</button>
+            <button onclick="generateRandomUser()">Generate Random User</button>
+            <div id="registerResult" class="result"></div>
+        </div>
+
+        <!-- Login Test -->
+        <div class="test-section">
+            <h2>3. User Login</h2>
+            <input type="email" id="loginEmail" placeholder="Email" value="test@university.edu">
+            <input type="password" id="loginPassword" placeholder="Password" value="test123456">
+            <button onclick="testLogin()">Test Login</button>
+            <div id="loginResult" class="result"></div>
+        </div>
+
+        <!-- Error Tests -->
+        <div class="test-section">
+            <h2>4. Error Handling Tests</h2>
+            <button onclick="testInvalidEmail()">Invalid Email Format</button>
+            <button onclick="testMissingFields()">Missing Fields</button>
+            <button onclick="testWrongPassword()">Wrong Password</button>
+            <button onclick="testDuplicateUser()">Duplicate Email</button>
+            <div id="errorResult" class="result"></div>
+        </div>
+
+        <!-- Integration Checklist -->
+        <div class="test-section">
+            <h2>✅ Integration Checklist</h2>
+            <ul class="checklist">
+                <li>Backend server running on port 3000</li>
+                <li>Azure Cosmos DB credentials configured</li>
+                <li>Database 'edushare' created</li>
+                <li>Container 'users' created with partition key /type</li>
+                <li>CORS enabled for frontend access</li>
+                <li>Password hashing with bcrypt</li>
+                <li>Email validation implemented</li>
+                <li>Error messages user-friendly</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+
+        // Check server status on load
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('http://localhost:3000/health');
+                const data = await response.json();
+                showStatus('Server is running! ✅', 'success');
+            } catch (error) {
+                showStatus('⚠️ Server not reachable. Start backend: npm run dev', 'error');
+            }
+        });
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('serverStatus');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+
+        function showResult(elementId, data, success = true) {
+            const resultDiv = document.getElementById(elementId);
+            const statusClass = success ? 'success' : 'error';
+            resultDiv.innerHTML = `
+                <div class="status ${statusClass}">
+                    ${success ? '✅ Success' : '❌ Error'}
+                </div>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            `;
+        }
+
+        async function testHealth() {
+            try {
+                const response = await fetch('http://localhost:3000/health');
+                const data = await response.json();
+                showResult('healthResult', data, response.ok);
+            } catch (error) {
+                showResult('healthResult', { error: error.message }, false);
+            }
+        }
+
+        async function testRegister() {
+            const firstName = document.getElementById('regFirstName').value;
+            const lastName = document.getElementById('regLastName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ firstName, lastName, email, password })
+                });
+                const data = await response.json();
+                showResult('registerResult', data, response.ok);
+                
+                // Auto-fill login fields
+                if (response.ok) {
+                    document.getElementById('loginEmail').value = email;
+                    document.getElementById('loginPassword').value = password;
+                }
+            } catch (error) {
+                showResult('registerResult', { error: error.message }, false);
+            }
+        }
+
+        async function testLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await response.json();
+                showResult('loginResult', data, response.ok);
+            } catch (error) {
+                showResult('loginResult', { error: error.message }, false);
+            }
+        }
+
+        function generateRandomUser() {
+            const random = Math.random().toString(36).substring(7);
+            document.getElementById('regFirstName').value = 'User';
+            document.getElementById('regLastName').value = random;
+            document.getElementById('regEmail').value = `user${random}@test.com`;
+            document.getElementById('regPassword').value = 'test123456';
+        }
+
+        async function testInvalidEmail() {
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        firstName: 'Test',
+                        lastName: 'User',
+                        email: 'invalid-email',
+                        password: 'test123'
+                    })
+                });
+                const data = await response.json();
+                showResult('errorResult', data, false);
+            } catch (error) {
+                showResult('errorResult', { error: error.message }, false);
+            }
+        }
+
+        async function testMissingFields() {
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        firstName: 'Test',
+                        email: 'test@test.com'
+                        // Missing lastName and password
+                    })
+                });
+                const data = await response.json();
+                showResult('errorResult', data, false);
+            } catch (error) {
+                showResult('errorResult', { error: error.message }, false);
+            }
+        }
+
+        async function testWrongPassword() {
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: document.getElementById('loginEmail').value,
+                        password: 'wrongpassword123'
+                    })
+                });
+                const data = await response.json();
+                showResult('errorResult', data, false);
+            } catch (error) {
+                showResult('errorResult', { error: error.message }, false);
+            }
+        }
+
+        async function testDuplicateUser() {
+            const email = document.getElementById('regEmail').value;
+            try {
+                // Try to register the same user twice
+                await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        firstName: 'Test',
+                        lastName: 'User',
+                        email: email,
+                        password: 'test123'
+                    })
+                });
+                
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        firstName: 'Test',
+                        lastName: 'User',
+                        email: email,
+                        password: 'test123'
+                    })
+                });
+                const data = await response.json();
+                showResult('errorResult', data, false);
+            } catch (error) {
+                showResult('errorResult', { error: error.message }, false);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete System Test - EduShare</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #8C1515;
+            margin-bottom: 1rem;
+        }
+
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: #8C1515;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        button:hover {
+            background: #000;
+        }
+
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 6px;
+            background: white;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-top: 0.5rem;
+        }
+
+        input[type="file"] {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Complete System Test - EduShare</h1>
+        
+        <div class="info">
+            <strong>⚠️ Prerequisites:</strong><br>
+            1. Backend server running on port 3000<br>
+            2. User logged in (localStorage has user data)<br>
+            3. Azure Cosmos DB configured
+        </div>
+
+        <!-- Health Check -->
+        <div class="test-section">
+            <h2>1. Server Health</h2>
+            <button onclick="testHealth()">Test Health</button>
+            <div id="healthResult"></div>
+        </div>
+
+        <!-- Get All Files -->
+        <div class="test-section">
+            <h2>2. Get All Files</h2>
+            <button onclick="getAllFiles()">Get All Files</button>
+            <div id="filesResult"></div>
+        </div>
+
+        <!-- Upload File -->
+        <div class="test-section">
+            <h2>3. Upload File</h2>
+            <input type="file" id="fileUpload" accept="*/*">
+            <button onclick="uploadFile()">Upload File</button>
+            <div id="uploadResult"></div>
+        </div>
+
+        <!-- Get Comments -->
+        <div class="test-section">
+            <h2>4. Get Comments</h2>
+            <p>Enter file ID from the files list above:</p>
+            <input type="text" id="commentFileId" placeholder="file_..." style="padding: 0.5rem; width: 100%; margin-bottom: 0.5rem;">
+            <button onclick="getComments()">Get Comments</button>
+            <div id="commentsResult"></div>
+        </div>
+
+        <!-- Add Comment -->
+        <div class="test-section">
+            <h2>5. Add Comment</h2>
+            <input type="text" id="addCommentFileId" placeholder="file_..." style="padding: 0.5rem; width: 100%; margin-bottom: 0.5rem;">
+            <input type="text" id="commentText" placeholder="Comment text..." style="padding: 0.5rem; width: 100%; margin-bottom: 0.5rem;">
+            <button onclick="addComment()">Add Comment</button>
+            <div id="addCommentResult"></div>
+        </div>
+
+        <!-- Download File -->
+        <div class="test-section">
+            <h2>6. Download File</h2>
+            <input type="text" id="downloadFileId" placeholder="file_..." style="padding: 0.5rem; width: 100%; margin-bottom: 0.5rem;">
+            <button onclick="downloadFile()">Download File</button>
+            <div id="downloadResult"></div>
+        </div>
+
+        <!-- Delete File -->
+        <div class="test-section">
+            <h2>7. Delete File</h2>
+            <input type="text" id="deleteFileId" placeholder="file_..." style="padding: 0.5rem; width: 100%; margin-bottom: 0.5rem;">
+            <button onclick="deleteFile()">Delete File</button>
+            <div id="deleteResult"></div>
+        </div>
+
+        <!-- Current User Info -->
+        <div class="test-section">
+            <h2>8. Current User</h2>
+            <button onclick="showUser()">Show User Info</button>
+            <div id="userResult"></div>
+        </div>
+
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+        function showResult(elementId, data, success = true) {
+            const resultDiv = document.getElementById(elementId);
+            resultDiv.className = 'result ' + (success ? 'success' : 'error');
+            resultDiv.innerHTML = `
+                ${success ? '✅ Success' : '❌ Error'}
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            `;
+        }
+
+        async function testHealth() {
+            try {
+                const response = await fetch('http://localhost:3000/health');
+                const data = await response.json();
+                showResult('healthResult', data, response.ok);
+            } catch (error) {
+                showResult('healthResult', { error: error.message }, false);
+            }
+        }
+
+        async function getAllFiles() {
+            try {
+                const response = await fetch(`${API_URL}/files`);
+                const data = await response.json();
+                showResult('filesResult', data, response.ok);
+            } catch (error) {
+                showResult('filesResult', { error: error.message }, false);
+            }
+        }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileUpload');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                showResult('uploadResult', { error: 'Please select a file' }, false);
+                return;
+            }
+
+            if (!user.id) {
+                showResult('uploadResult', { error: 'Please login first' }, false);
+                return;
+            }
+
+            try {
+                // Convert to base64
+                const base64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+
+                const response = await fetch(`${API_URL}/files/upload`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fileName: file.name,
+                        fileSize: file.size,
+                        fileType: file.type || 'application/octet-stream',
+                        fileData: base64,
+                        uploadedBy: user
+                    })
+                });
+
+                const data = await response.json();
+                showResult('uploadResult', data, response.ok);
+            } catch (error) {
+                showResult('uploadResult', { error: error.message }, false);
+            }
+        }
+
+        async function getComments() {
+            const fileId = document.getElementById('commentFileId').value.trim();
+
+            if (!fileId) {
+                showResult('commentsResult', { error: 'Please enter a file ID' }, false);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/comments/${fileId}`);
+                const data = await response.json();
+                showResult('commentsResult', data, response.ok);
+            } catch (error) {
+                showResult('commentsResult', { error: error.message }, false);
+            }
+        }
+
+        async function addComment() {
+            const fileId = document.getElementById('addCommentFileId').value.trim();
+            const text = document.getElementById('commentText').value.trim();
+
+            if (!fileId || !text) {
+                showResult('addCommentResult', { error: 'Please enter file ID and comment text' }, false);
+                return;
+            }
+
+            if (!user.id) {
+                showResult('addCommentResult', { error: 'Please login first' }, false);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/comments/${fileId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: text,
+                        author: user
+                    })
+                });
+
+                const data = await response.json();
+                showResult('addCommentResult', data, response.ok);
+            } catch (error) {
+                showResult('addCommentResult', { error: error.message }, false);
+            }
+        }
+
+        async function downloadFile() {
+            const fileId = document.getElementById('downloadFileId').value.trim();
+
+            if (!fileId) {
+                showResult('downloadResult', { error: 'Please enter a file ID' }, false);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/files/download/${fileId}`);
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    showResult('downloadResult', { 
+                        message: 'File data retrieved successfully',
+                        fileName: data.file.fileName,
+                        size: data.file.fileSize,
+                        type: data.file.fileType
+                    }, true);
+                } else {
+                    showResult('downloadResult', data, false);
+                }
+            } catch (error) {
+                showResult('downloadResult', { error: error.message }, false);
+            }
+        }
+
+        async function deleteFile() {
+            const fileId = document.getElementById('deleteFileId').value.trim();
+
+            if (!fileId) {
+                showResult('deleteResult', { error: 'Please enter a file ID' }, false);
+                return;
+            }
+
+            if (!user.id) {
+                showResult('deleteResult', { error: 'Please login first' }, false);
+                return;
+            }
+
+            if (!confirm('Are you sure you want to delete this file?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/files/${fileId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: user.id })
+                });
+
+                const data = await response.json();
+                showResult('deleteResult', data, response.ok);
+            } catch (error) {
+                showResult('deleteResult', { error: error.message }, false);
+            }
+        }
+
+        function showUser() {
+            if (user.id) {
+                showResult('userResult', user, true);
+            } else {
+                showResult('userResult', { error: 'No user logged in. Please login first.' }, false);
+            }
+        }
+
+        // Show user on load
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!user.id) {
+                document.querySelector('.info').innerHTML += '<br><br><strong style="color: #721c24;">⚠️ WARNING: No user logged in! Please login first via files.html or register.html</strong>';
+            }
+        });
+    </script>
+</body>
+</html>

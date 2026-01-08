@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Management - EduShare</title>
+    <link rel="stylesheet" href="files.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo-section">
+                <div class="logo-circle">
+                    <svg width="50" height="50" viewBox="0 0 50 50">
+                        <polygon points="25,15 5,23 25,31 45,23" fill="#b21111"/>
+                        <rect x="10" y="10" width="30" height="3" fill="#000"/>
+                        <path d="M 15,23 L 15,30 Q 25,35 35,30 L 35,23" fill="#000"/>
+                        <line x1="39" y1="10" x2="42" y2="18" stroke="#8C1515" stroke-width="1.5"/>
+                        <circle cx="42.5" cy="19" r="2" fill="#8C1515"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>EduShare</h1>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="files.html" class="active">Files</a></li>
+                    <li><a href="#academics">Academics</a></li>
+                    <li><a href="#news">News</a></li>
+                    <li><a href="#research">Research</a></li>
+                </ul>
+            </nav>
+            <div class="user-section">
+                <span class="user-name">John Doe</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <button class="upload-btn" id="uploadBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                Upload File
+            </button>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-view="all">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    All Files
+                    <span class="count">24</span>
+                </a>
+                <a href="#" class="nav-item" data-view="my">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                        <polyline points="13 2 13 9 20 9"/>
+                    </svg>
+                    My Files
+                    <span class="count">12</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- File Display Area -->
+        <section class="file-area">
+            <div class="file-header">
+                <h2 class="section-title" id="sectionTitle">All Files</h2>
+                <div class="view-controls">
+                    <input type="search" class="search-box" placeholder="Search files...">
+                    <select class="sort-select">
+                        <option>Sort by Date</option>
+                        <option>Sort by Name</option>
+                        <option>Sort by Size</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Files List -->
+            <div class="files-list" id="filesGrid">
+                <div class="file-item" data-file-id="${file.id}">
+                    <div class="file-left">
+                        <div class="file-icon-small pdf">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                <rect width="40" height="40" rx="4" fill="#E62025"/>
+                                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="16" font-weight="600" font-family="Arial">PDF</text>
+                            </svg>
+                        </div>
+                        <span class="file-name">Machine Learning Notes.pdf</span>
+                    </div>
+                    <div class="file-right">
+                        <span class="file-size">2.4 mb</span>
+                        <span class="file-date">Jan 4, 2026</span>
+                        <div class="file-user">
+                            <div class="user-avatar" style="background: linear-gradient(135deg, #3498db, #2980b9);">S</div>
+                            <span class="user-name">Sarah Johnson</span>
+                        </div>
+                        <div class="file-actions-group">
+                            <button class="download-btn" title="Download">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="file-item my-file" data-file-id="${file.id}">
+                    <div class="file-left">
+                        <div class="file-icon-small doc">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <rect width="32" height="32" rx="3" fill="#2B579A"/>
+                                <path d="M10 10L12 20H13.5L15 12.5L16.5 20H18L20 10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="file-name">Research Paper Draft.docx</span>
+                    </div>
+                    <div class="file-right">
+                        <span class="file-size">1.8 mb</span>
+                        <span class="file-date">Jan 1, 2026</span>
+                        <div class="file-user">
+                            <div class="user-avatar" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">Y</div>
+                            <span class="user-name">You</span>
+                        </div>
+                        <div class="file-actions-group">
+                            <button class="edit-btn" title="Edit" onclick="showEditFileModal('${file.id}')">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                                </svg>
+                            </button>
+                            <button class="comment-btn" title="Comments" data-file="Research Paper Draft.docx">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                            </button>
+                            <button class="download-btn" title="Download">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                            </button>
+                            <button class="delete-btn" title="Delete" onclick="deleteFile('${file.id}')">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="file-item" data-file-id="${file.id}">
+                    <div class="file-left">
+                        <div class="file-icon-small excel">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <rect width="32" height="32" rx="3" fill="#217346"/>
+                                <path d="M11 11L16 16M16 16L21 21M16 16L21 11M16 16L11 21" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="file-name">pop03152021.xlsx</span>
+                    </div>
+                    <div class="file-right">
+                        <span class="file-size">4.1 mb</span>
+                        <span class="file-date">Dec 30, 2025</span>
+                        <div class="file-user">
+                            <div class="user-avatar" style="background: linear-gradient(135deg, #e67e22, #d35400);">R</div>
+                            <span class="user-name">Ronald Richards</span>
+                        </div>
+                        <div class="file-actions-group">
+                            <button class="comment-btn" title="Comments" data-file="pop03152021.xlsx">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                            </button>
+                            <button class="download-btn" title="Download">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                            </button>
+                            <button class="delete-btn" title="Delete" onclick="deleteFile('${file.id}')">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="file-item" data-file-id="${file.id}">
+                    <div class="file-left">
+                        <div class="file-icon-small excel">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <rect width="32" height="32" rx="3" fill="#217346"/>
+                                <path d="M11 11L16 16M16 16L21 21M16 16L21 11M16 16L11 21" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span class="file-name">DealSheet032021.xlsx</span>
+                    </div>
+                    <div class="file-right">
+                        <span class="file-size">3.9 mb</span>
+                        <span class="file-date">Dec 28, 2025</span>
+                        <div class="file-user">
+                            <div class="user-avatar" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">B</div>
+                            <span class="user-name">Bessie Cooper</span>
+                        </div>
+                        <div class="file-actions-group">
+                            <button class="comment-btn" title="Comments" data-file="DealSheet032021.xlsx">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                            </button>
+                            <button class="download-btn" title="Download">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                            </button>
+                            <button class="delete-btn" title="Delete" onclick="deleteFile('${file.id}')">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="file-item" data-file-id="${file.id}">
+                    <div class="file-left">
+                        <div class="file-icon-small pdf">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <rect width="32" height="32" rx="3" fill="#E62025"/>
+                                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="Arial">PDF</text>
+                            </svg>
+                        </div>
+                        <span class="file-name">Presentation Slides.pdf</span>
+                    </div>
+                    <div class="file-right">
+                        <span class="file-size">5.6 mb</span>
+                        <span class="file-date">Jan 3, 2026</span>
+                        <div class="file-user">
+                            <div class="user-avatar" style="background: linear-gradient(135deg, #3498db, #2980b9);">J</div>
+                            <span class="user-name">Jenny Wilson</span>
+                        </div>
+                        <div class="file-actions-group">
+                            <button class="comment-btn" title="Comments" data-file="Presentation Slides.pdf">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                            </button>
+                            <button class="download-btn" title="Download">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                            </button>
+                            <button class="delete-btn" title="Delete" onclick="deleteFile('${file.id}')">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="file-item" data-file-id="${file.id}">
+                    <div class="file-left">
+                        <div class="file-icon-small pdf">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <rect width="32" height="32" rx="3" fill="#E62025"/>
+                                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="Arial">PDF</text>
+                            </svg>
+                        </div>
+                        <span class="file-name">Invoice for YAAAS Queen.pdf</span>
+                    </div>
+                    <div class="file-right">
+                        <span class="file-size">337 kb</span>
+                        <span class="file-date">Jan 5, 2026</span>
+                        <div class="file-user">
+                            <div class="user-avatar" style="background: linear-gradient(135deg, #1abc9c, #16a085);">C</div>
+                            <span class="user-name">Cameron Williamson</span>
+                        </div>
+                        <div class="file-actions-group">
+                            <button class="comment-btn" title="Comments" data-file="Invoice for YAAAS Queen.pdf">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                            </button>
+                            <button class="download-btn" title="Download">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                            </button>
+                            <button class="delete-btn" title="Delete" onclick="deleteFile('${file.id}')">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Comments Modal -->
+    <div class="modal" id="commentsModal">
+        <div class="modal-content comments-modal-content">
+            <div class="modal-header">
+                <h2 id="commentsFileName">Comments</h2>
+                <button class="close-btn" id="closeCommentsModal">&times;</button>
+            </div>
+            
+            <div class="comments-container">
+                <div class="comments-list" id="commentsList">
+                    <!-- Sample comments -->
+                    <div class="comment-item">
+                        <div class="comment-avatar" style="background: linear-gradient(135deg, #3498db, #2980b9);">S</div>
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <span class="comment-author">Sarah Johnson</span>
+                                <span class="comment-time">2 hours ago</span>
+                            </div>
+                            <p class="comment-text">Great work on this document! The analysis is very thorough.</p>
+                        </div>
+                    </div>
+                    <div class="comment-item">
+                        <div class="comment-avatar" style="background: linear-gradient(135deg, #e67e22, #d35400);">R</div>
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <span class="comment-author">Ronald Richards</span>
+                                <span class="comment-time">1 day ago</span>
+                            </div>
+                            <p class="comment-text">Can you add more details about the methodology section?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="add-comment-section">
+                    <textarea id="commentInput" placeholder="Add a comment..." rows="3"></textarea>
+                    <button class="btn-add-comment" id="addCommentBtn">Post Comment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Upload File</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            
+            <form class="upload-form">
+                <div class="form-group">
+                    <label for="fileName">File Name</label>
+                    <input type="text" id="fileName" placeholder="Enter file name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mentionPerson">Mention Person (Optional)</label>
+                    <input type="text" id="mentionPerson" placeholder="@username or name">
+                </div>
+
+                <div class="form-group">
+                    <label>Upload File</label>
+                    <div class="drop-zone" id="dropZone">
+                        <div class="drop-zone-content">
+                            <svg class="upload-icon-large" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                            <p class="drop-text">Drag & Drop your file here</p>
+                            <p class="drop-text-or">or</p>
+                            <button type="button" class="browse-btn" id="browseBtn">Browse Files</button>
+                            <input type="file" id="fileInput" hidden>
+                            <p class="file-limit">Maximum file size: 100 MB</p>
+                        </div>
+                        <div class="file-preview" id="filePreview" style="display: none;">
+                            <svg class="preview-icon" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                                <polyline points="13 2 13 9 20 9"/>
+                            </svg>
+                            <div class="preview-info">
+                                <p class="preview-name" id="previewName"></p>
+                                <p class="preview-size" id="previewSize"></p>
+                            </div>
+                            <button type="button" class="remove-file" id="removeFile">&times;</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn-submit">Upload File</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Edit File Modal -->
+    <div class="modal" id="editFileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit File</h2>
+                <button class="close-btn" id="closeEditFileModal">&times;</button>
+            </div>
+
+            <form class="edit-form">
+                <div class="form-group">
+                    <label for="editFileName">File Name</label>
+                    <input type="text" id="editFileName" placeholder="Enter file name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editMentionPerson">Mention Person (Optional)</label>
+                    <input type="text" id="editMentionPerson" placeholder="@username or name">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancelEditFileBtn">Cancel</button>
+                    <button type="button" class="btn-submit" id="saveEditFileBtn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="files.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const editFileModal = document.getElementById('editFileModal');
+            const closeEditFileModal = document.getElementById('closeEditFileModal');
+            const cancelEditFileBtn = document.getElementById('cancelEditFileBtn');
+            const saveEditFileBtn = document.getElementById('saveEditFileBtn');
+
+            // Close modal on cancel or close button click
+            closeEditFileModal.addEventListener('click', () => {
+                editFileModal.classList.remove('active');
+            });
+
+            cancelEditFileBtn.addEventListener('click', () => {
+                editFileModal.classList.remove('active');
+            });
+
+            // Function to show the modal with existing file data
+            window.showEditFileModal = (fileId, fileName, mention, userId) => {
+                document.getElementById('editFileName').value = fileName;
+                document.getElementById('editMentionPerson').value = mention || '';
+                saveEditFileBtn.setAttribute('data-file-id', fileId);
+                saveEditFileBtn.setAttribute('data-user-id', userId);
+                editFileModal.classList.add('active');
+            };
+
+            // Save changes and update the file
+            saveEditFileBtn.addEventListener('click', async () => {
+                const fileId = saveEditFileBtn.getAttribute('data-file-id');
+                const userId = saveEditFileBtn.getAttribute('data-user-id');
+                const updatedFileName = document.getElementById('editFileName').value.trim();
+                const updatedMention = document.getElementById('editMentionPerson').value.trim();
+
+                if (!updatedFileName) {
+                    alert('File name cannot be empty.');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/files/${fileId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ fileName: updatedFileName, mention: updatedMention, userId }),
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        alert('File updated successfully.');
+                        editFileModal.classList.remove('active');
+                        // Optionally, refresh the file list or update the UI
+                    } else {
+                        alert(data.message || 'Failed to update file.');
+                    }
+                } catch (error) {
+                    console.error('Error updating file:', error);
+                    alert('An error occurred while updating the file.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

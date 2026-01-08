@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - EduShare</title>
+    <link rel="stylesheet" href="register.css">
+    <script src="register.js" defer></script>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-left">
+            <div class="logo-section">
+                <div class="logo-circle">
+                    <svg width="60" height="60" viewBox="0 0 50 50">
+                        <!-- Graduation cap base -->
+                        <polygon points="25,15 5,23 25,31 45,23" fill="#fff"/>
+                        <!-- Cap top (mortarboard) -->
+                        <rect x="10" y="10" width="30" height="3" fill="#fff"/>
+                        <!-- Cap bottom part -->
+                        <path d="M 15,23 L 15,30 Q 25,35 35,30 L 35,23" fill="#fff"/>
+                        <!-- Tassel -->
+                        <line x1="39" y1="10" x2="42" y2="18" stroke="#fff" stroke-width="1.5"/>
+                        <circle cx="42.5" cy="19" r="2" fill="#fff"/>
+                    </svg>
+                </div>
+                <h1 class="logo-text">EduShare</h1>
+            </div>
+            <h2 class="welcome-text">Join Our Learning Community</h2>
+            <p class="tagline">Share knowledge, collaborate, and grow together</p>
+        </div>
+
+        <div class="register-right">
+            <div class="form-wrapper">
+                <h2 class="form-title">Student Registration</h2>
+                <p class="form-subtitle">Create your account to get started</p>
+                
+                <form class="register-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="john.doe@university.edu" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-register">Create Account</button>
+                    
+                    <p class="login-link">Already have an account? <a href="index.html">Login here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

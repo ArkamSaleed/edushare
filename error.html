@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - EduShare</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            color: #8C1515;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2C3E50;
+            margin: 1rem 0;
+        }
+
+        .error-message {
+            font-size: 1.1rem;
+            color: #666;
+            margin: 1rem 0 2rem 0;
+            max-width: 500px;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .error-btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #8C1515;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #6D0E0E;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .error-icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-section">
+                <div class="logo-circle">
+                    <svg width="50" height="50" viewBox="0 0 50 50">
+                        <polygon points="25,15 5,23 25,31 45,23" fill="#b21111"/>
+                        <rect x="10" y="10" width="30" height="3" fill="#000"/>
+                        <path d="M 15,23 L 15,30 Q 25,35 35,30 L 35,23" fill="#000"/>
+                        <line x1="39" y1="10" x2="42" y2="18" stroke="#8C1515" stroke-width="1.5"/>
+                        <circle cx="42.5" cy="19" r="2" fill="#8C1515"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>EduShare</h1>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="files.html">Files</a></li>
+                    <li><a href="#academics">Academics</a></li>
+                    <li><a href="#news">News</a></li>
+                    <li><a href="#research">Research</a></li>
+                </ul>
+            </nav>
+            <div class="login">
+                <a href="login.html" class="login-btn-link">
+                    <button class="login-btn">
+                        Login
+                    </button>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="error-container">
+            <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="#8C1515" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">Page Not Found</h2>
+            <p class="error-message">
+                Oops! The page you're looking for doesn't exist. 
+                It might have been moved or deleted, or you may have mistyped the URL.
+            </p>
+            <div class="error-actions">
+                <a href="index.html" class="error-btn btn-primary">Go to Home</a>
+                <a href="files.html" class="error-btn btn-secondary">Browse Files</a>
+                <a href="javascript:history.back()" class="error-btn btn-secondary">Go Back</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

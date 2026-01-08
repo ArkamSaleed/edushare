@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EduShare</title>
+    <link rel="stylesheet" href="login.css">
+    <script src="login.js" defer></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-left">
+            <div class="logo-section">
+                <div class="logo-circle">
+                    <svg width="60" height="60" viewBox="0 0 50 50">
+                        <!-- Graduation cap base -->
+                        <polygon points="25,15 5,23 25,31 45,23" fill="#fff"/>
+                        <!-- Cap top (mortarboard) -->
+                        <rect x="10" y="10" width="30" height="3" fill="#fff"/>
+                        <!-- Cap bottom part -->
+                        <path d="M 15,23 L 15,30 Q 25,35 35,30 L 35,23" fill="#fff"/>
+                        <!-- Tassel -->
+                        <line x1="39" y1="10" x2="42" y2="18" stroke="#fff" stroke-width="1.5"/>
+                        <circle cx="42.5" cy="19" r="2" fill="#fff"/>
+                    </svg>
+                </div>
+                <h1 class="logo-text">EduShare</h1>
+            </div>
+            <h2 class="welcome-text">Welcome Back</h2>
+            <p class="tagline">Continue your learning journey with us</p>
+        </div>
+
+        <div class="login-right">
+            <div class="form-wrapper">
+                <h2 class="form-title">Student Login</h2>
+                <p class="form-subtitle">Access your account</p>
+                
+                <form class="login-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="john.doe@university.edu" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn-login">Login</button>
+                    
+                    <p class="register-link">Don't have an account? <a href="register.html">Register here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
