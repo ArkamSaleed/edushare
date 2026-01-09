@@ -1,5 +1,5 @@
 // API Configuration
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://edushare-h9d4ffeqh2fqacfz.francecentral-01.azurewebsites.net/api';
 
 // Get form element
 const registerForm = document.querySelector('.register-form');
@@ -33,6 +33,7 @@ registerForm.addEventListener('submit', async (e) => {
     
     try {
         // Make API call
+        console.log('Attempting registration with API URL:', API_URL);
         const response = await fetch(`${API_URL}/auth/register`, {
             method: 'POST',
             headers: {
@@ -46,7 +47,9 @@ registerForm.addEventListener('submit', async (e) => {
             })
         });
         
+        console.log('Response status:', response.status);
         const data = await response.json();
+        console.log('Response data:', data);
         
         if (response.ok && data.success) {
             // Success - show message and redirect
