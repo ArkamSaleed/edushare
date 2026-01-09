@@ -8,10 +8,21 @@ const commentsRoutes = require('./routes/comments');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// CORS configuration
+const corsOptions = {
+    origin: '*', // Allow all origins for now, restrict later for production
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json({ limit: '50mb' })); // Increase limit for file uploads
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// Serve static files from public directory
+app.use(express.static('public'));
 
 // Routes
 app.use('/api/auth', authRoutes);

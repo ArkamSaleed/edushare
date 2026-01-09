@@ -1,5 +1,5 @@
 // API Configuration
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://edushare-h9d4ffeqh2fqacfz.francecentral-01.azurewebsites.net/api';
 
 // Get current user
 const user = JSON.parse(localStorage.getItem('user') || '{}');
